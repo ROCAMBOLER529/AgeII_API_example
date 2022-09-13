@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script type="text/javascript">
+            const getRespuestaHttp = (url, callback) => {
+                const xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) {
+                            const resp = JSON.parse(this.responseText);
+                            callback(null, resp);
+                        } else 
+                            callback(this.response ? JSON.parse(this.response) : { error: "No se anidó"});
+                    }
+                };
+                xhttp.open("GET", url, true);
+                xhttp.send();
+            }
+
+            const obtenerCivilizaciones = () => {
+                let url = `https://age-of-empires-2-api.herokuapp.com/api/v1/civilizations`;
+                getRespuestaHttp(url, (err, res) => {
+                    if (err) alert(`Error: ${err.error}`);
+                    else {
+                        alert(`Primera civilizacion: ${res.civilizations.name[0]}`);
+                    }
+                })
+            }
+            
+            var op2; let op1 = prompt("¿Que desea buscar? 1-Civil. 2-Unidades 3-Estructuras 4-Tecno.");
+            switch(op1) {
+                case '1':
+                    op2 = prompt("¿Que desea buscar? 1-Todas las Civil. 2-Civil. en especifico(id) 3-Civil random.");
+                    switch(op2) {
+                        case '1':
+                            obtenerCivilizaciones();
+                            break;
+                        default:
+                            alert(`Opción no válida`);
+                    }
+                    break;
+                case '2':s
+                    alert(`Unidades`);
+                    break;
+                case '3':
+                    alert(`Estructuras`);
+                    break;
+                case '4':
+                    alert(`Tecno`);
+                    break;
+                default:
+                    alert(`Opción no válida`);
+            }
+        </script>
+    </head>
+
+    <body>
+
+    </body>
+</html>
