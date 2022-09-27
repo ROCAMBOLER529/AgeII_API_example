@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script>
+
+            const handleFetch = async url => {
+                const res = await fetch(url);
+                return await handleError(res);
+            }
+
+            const handleError = res => {
+                if (!res.ok) throw new Error(res.statusText);
+                return res;
+            }
+
+            const buscarPerro = async raza => {
+                let url = `https://dog.ceo/api/breed/${raza}/images/random`;
+                try {
+                    const res = await handleFetch(url);
+                    const resJSON = await res.json();
+
+                    alert(resJSON.status);
+                } catch(err) {
+                    alert(err);
+                }
+                return resJSON.message;
+            }
+
+            let raza = prompt("Ingrese el nombre de raza");
+            myList = buscarPerro(raza);
+
+        </script>
+    </head>
+
+    <body>
+        <div>
+            <input type="text" placeholder="...">
+            <script>
+
+function buildHtmlTable(selector) {
+  var columns = addAllColumnHeaders(myList, selector);
+
+  for (var i = 0; i < myList.length; i++) {
+    var row$ = $('<tr/>');
+    for (var colIndex = 0; colIndex < columns.length; colIndex++) {
+      var cellValue = myList[i][columns[colIndex]];
+      if (cellValue == null) cellValue = "";
+      row$.append($('<td/>').html(cellValue));
+    }
+    $(selector).append(row$);
+  }
+}
+
+function addAllColumnHeaders(myList, selector) {
+  var columnSet = [];
+  var headerTr$ = $('<tr/>');
+
+  for (var i = 0; i < myList.length; i++) {
+    var rowHash = myList[i];
+    for (var key in rowHash) {
+      if ($.inArray(key, columnSet) == -1) {
+        columnSet.push(key);
+        headerTr$.append($('<th/>').html(key));
+      }
+    }
+  }
+  $(selector).append(headerTr$);
+  return columnSet;
+}
+            </script>
+        </div>
+    </body>
+</html>

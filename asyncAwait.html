@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script>
+
+            const handleFetch = async url => {
+                const res = await fetch(url);
+                return await handleError(res);
+            }
+
+            const handleError = (res) => {
+                if (!res.ok) throw new Error(res.statusText);
+                return res;
+            }
+
+            const averiguarPais = async nombre => {
+                let url = `https://api.nationalize.io/?name=${nombre}`;
+                try {
+                    const res = await handleFetch(url);
+                    const resJSON = await res.json();
+                    let paisMasProb = resJSON.country.reduce((a, b) => {
+                        return a.probability > b.probability ? a : b;
+                    }, 0);
+                    alert(`Pais más probable: ${paisMasProb.country_id}`);
+                } catch (err) {
+                    alert(err);
+                }
+            };
+
+            let nombre = prompt("¿Cual es tu nombre?");
+            averiguarPais(nombre);
+
+        </script>
+    </head>
+
+    <body>
+
+    </body>
+</html>
